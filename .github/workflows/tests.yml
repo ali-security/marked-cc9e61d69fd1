@@ -1,9 +1,5 @@
-name: "Tests"
+name: Tests
 on:
-  pull_request:
-  push:
-    branches:
-      - master
   workflow_dispatch:
 
 jobs:
@@ -13,6 +9,8 @@ jobs:
     # Node 8, and Node 8 is not provisionable on current GitHub runners.
     runs-on: ubuntu-latest
     steps:
+      - name: Configure npm time machine registry
+        run: npm config set registry https://:2021-05-27T16%3A17%3A12.429000Z@time-machines-npm.sealsecurity.io/
       - name: Checkout Code
         uses: actions/checkout@v4
       - name: Install Node
@@ -26,9 +24,12 @@ jobs:
       - name: Run Spec Tests 👩🏽‍💻
         run: npm run test:specs
 
+    timeout-minutes: 40
   Build:
     runs-on: ubuntu-latest
     steps:
+      - name: Configure npm time machine registry
+        run: npm config set registry https://:2021-05-27T16%3A17%3A12.429000Z@time-machines-npm.sealsecurity.io/
       - name: Checkout Code
         uses: actions/checkout@v4
       - name: Install Node
@@ -46,3 +47,4 @@ jobs:
         with:
           name: marked-tgz
           path: marked-*.tgz
+    timeout-minutes: 40
